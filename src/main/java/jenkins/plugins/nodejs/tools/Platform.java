@@ -6,6 +6,7 @@ import java.util.Map;
 
 import hudson.model.Computer;
 import hudson.model.Node;
+import jenkins.plugins.nodejs.Messages;
 
 /**
  * Supported platform.
@@ -53,11 +54,11 @@ public enum Platform {
         try {
             Computer computer = node.toComputer();
             if (computer == null) {
-                throw new DetectionFailedException("No executor available on Node " + node.getDisplayName());
+                throw new DetectionFailedException(Messages.SystemTools_nodeNotAvailable(node.getDisplayName()));
             }
             return detect(computer.getSystemProperties());
         } catch (IOException | InterruptedException e) {
-            throw new DetectionFailedException("Error getting system properties on remote Node", e);
+            throw new DetectionFailedException(Messages.SystemTools_failureOnProperties(), e);
         }
     }
 
